@@ -12,6 +12,7 @@ class Song(models.Model):
     album = models.CharField(max_length=100)
     release_date = models.DateField(auto_now_add=True)
     genre = models.CharField(max_length=100)
+    like_count = models.IntegerField(blank=True, null=True)
 
     class Meta:
         db_table = 'songs'
