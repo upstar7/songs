@@ -1,0 +1,188 @@
+{
+    "info": {
+        "_postman_id": "4bfa2163-0062-4ce1-9882-192a3d4a6c70",
+        "name": "Song App",
+        "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+    },
+    "item": [
+        {
+            "name": "Update Song",
+            "request": {
+                "method": "PUT",
+                "header": [],
+                "body": {
+                    "mode": "formdata",
+                    "formdata": [
+                        {
+                            "key": "id",
+                            "value": "123",
+                            "type": "default"
+                        },
+                        {
+                            "key": "title",
+                            "value": "rtyrtyrtyrty",
+                            "type": "default"
+                        },
+                        {
+                            "key": "artist",
+                            "value": "sdvdv",
+                            "type": "default"
+                        },
+                        {
+                            "key": "album",
+                            "value": "dvdvdvdvdvdvdvd",
+                            "type": "default"
+                        },
+                        {
+                            "key": "genre",
+                            "value": "xcvxcvxcv",
+                            "type": "default"
+                        }
+                    ]
+                },
+                "url": {
+                    "raw": "http://localhost:8000/api/music/123",
+                    "protocol": "http",
+                    "host": ["localhost"],
+                    "port": "8000",
+                    "path": ["api", "music", "123"]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "Get All Songs",
+            "protocolProfileBehavior": {
+                "disableBodyPruning": true
+            },
+            "request": {
+                "method": "GET",
+                "header": [],
+                "body": {
+                    "mode": "formdata",
+                    "formdata": [
+                        {
+                            "key": "id",
+                            "value": "123",
+                            "type": "default"
+                        },
+                        {
+                            "key": "title",
+                            "value": "rtyrtyrtyrty",
+                            "type": "default"
+                        },
+                        {
+                            "key": "artist",
+                            "value": "sdvdv",
+                            "type": "default"
+                        },
+                        {
+                            "key": "album",
+                            "value": "dvdvdvdvdvdvdvd",
+                            "type": "default"
+                        },
+                        {
+                            "key": "genre",
+                            "value": "xcvxcvxcv",
+                            "type": "default"
+                        }
+                    ]
+                },
+                "url": {
+                    "raw": "http://localhost:8000/api/music/",
+                    "protocol": "http",
+                    "host": ["localhost"],
+                    "port": "8000",
+                    "path": ["api", "music", ""]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "Create Song",
+            "request": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                    "mode": "formdata",
+                    "formdata": [
+                        {
+                            "key": "id",
+                            "value": "123123",
+                            "type": "default"
+                        },
+                        {
+                            "key": "title",
+                            "value": "asd",
+                            "type": "default"
+                        },
+                        {
+                            "key": "artist",
+                            "value": "ghj",
+                            "type": "default"
+                        },
+                        {
+                            "key": "album",
+                            "value": "yui",
+                            "type": "default"
+                        },
+                        {
+                            "key": "genre",
+                            "value": "ioojjjj",
+                            "type": "default"
+                        }
+                    ]
+                },
+                "url": {
+                    "raw": "http://localhost:8000/api/music/",
+                    "protocol": "http",
+                    "host": ["localhost"],
+                    "port": "8000",
+                    "path": ["api", "music", ""]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "Delete Song",
+            "request": {
+                "method": "DELETE",
+                "header": [],
+                "body": {
+                    "mode": "formdata",
+                    "formdata": []
+                },
+                "url": {
+                    "raw": "http://localhost:8000/api/music/12314",
+                    "protocol": "http",
+                    "host": ["localhost"],
+                    "port": "8000",
+                    "path": ["api", "music", "12314"]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "Get One Song",
+            "protocolProfileBehavior": {
+                "disableBodyPruning": true
+            },
+            "request": {
+                "method": "GET",
+                "header": [],
+                "body": {
+                    "mode": "formdata",
+                    "formdata": []
+                },
+                "url": {
+                    "raw": "http://localhost:8000/api/music/123",
+                    "protocol": "http",
+                    "host": ["localhost"],
+                    "port": "8000",
+                    "path": ["api", "music", "123"]
+                }
+            },
+            "response": []
+        }
+    ]
+}
