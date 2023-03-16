@@ -58,7 +58,6 @@ class SongDetail(generics.GenericAPIView):
         return Response({"status": "success", "song": serializer.data})
 
     def put(self, request, pk):
-        print("aaasdfsdf")
         song = self.get_song(pk)
         if song == None:
             return Response({"status": "fail", "message": f"song with Id: {pk} not found"}, status=status.HTTP_404_NOT_FOUND)
