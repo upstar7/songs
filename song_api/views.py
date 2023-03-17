@@ -57,7 +57,7 @@ class SongDetail(generics.GenericAPIView):
         serializer = self.serializer_class(song)
         return Response({"status": "success", "song": serializer.data})
 
-    def put(self, request, pk):
+    def put(self, request, pk, option=None):
         song = self.get_song(pk)
         if song == None:
             return Response({"status": "fail", "message": f"song with Id: {pk} not found"}, status=status.HTTP_404_NOT_FOUND)
@@ -66,6 +66,10 @@ class SongDetail(generics.GenericAPIView):
             song, data=request.data, partial=True)
         if serializer.is_valid():
             serializer.validated_data['updatedAt'] = datetime.now()
+            if option == 'like':
+                serializer.validated_data['like_count'] += 1
+            if option == None:
+                serializer.validated_data['like_count'] = 0
             serializer.save()
             return Response({"status": "success", "song": serializer.data})
         return Response({"status": "fail", "message": serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
