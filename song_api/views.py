@@ -11,26 +11,27 @@ class Songs(generics.GenericAPIView):
     queryset = Song.objects.all()
 
     def get(self, request):
-        page_num = int(request.GET.get("page", 1))
-        limit_num = int(request.GET.get("limit", 20))
-        start_num = (page_num - 1) * limit_num
-        end_num = limit_num * page_num
-        search_param = request.GET.get("search")
+        # page_num = int(request.GET.get("page", 1))
+        # limit_num = int(request.GET.get("limit", 20))
+        # start_num = (page_num - 1) * limit_num
+        # end_num = limit_num * page_num
+        search_param = request.GET.get("title")
+        print(search_param)
         songs = Song.objects.all()
-        total_songs = songs.count()
+        # total_songs = songs.count()
         if search_param:
             songs = songs.filter(title__icontains=search_param)
-        serializer = self.serializer_class(songs[start_num:end_num], many=True)
+        serializer = self.serializer_class(songs, many=True)
         return Response({
             "status": "success",
-            "total": total_songs,
-            "page": page_num,
-            "last_page": math.ceil(total_songs / limit_num),
+            # "total": total_songs,
+            # "page": page_num,
+            # "last_page": math.ceil(total_songs / limit_num),
             "songs": serializer.data
         })
 
     def post(self, request):
-        print("sdfsdfsdfsdfsdfsdfsdfsdf")
+        # print("sdfsdfsdfsdfsdfsdfsdfsdf")
         serializer = self.serializer_class(data=request.data)
         if serializer.is_valid():
             serializer.save()

@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import SongService from "../services/SongService";
+import Button from "react-bootstrap/Button";
+import Form from "react-bootstrap/Form";
 
 const AddSong = () => {
     const initialSongState = {
@@ -11,34 +13,67 @@ const AddSong = () => {
     };
     const [song, setSong] = useState(initialSongState);
     const [submitted, setSubmitted] = useState(false);
+    const [errors, setErrors] = useState({});
+
     const handleInputChange = (event) => {
         const { name, value } = event.target;
         setSong({ ...song, [name]: value });
-    };
-    const saveSong = () => {
-        var data = {
-            title: song.title,
-            artist: song.artist,
-            album: song.album,
-            genre: song.genre,
-        };
-        console.log(data);
-        SongService.create(data)
-            .then((response) => {
-                setSong({
-                    id: response.data.id,
-                    title: response.data.title,
-                    artist: response.data.artist,
-                    album: response.data.album,
-                    genre: response.data.genre,
-                    release_date: response.data.release_date,
-                });
-                setSubmitted(true);
-                console.log(response.data);
-            })
-            .catch((e) => {
-                console.log(e);
+        // console.log(errors);
+        if (!!errors[name])
+            setErrors({
+                ...errors,
+                [name]: null,
             });
+    };
+
+    const findFormErrors = () => {
+        const { title, artist, album, genre } = song;
+        const newErrors = {};
+        // name errors
+        if (!title || title === "") newErrors.title = "Cannot be blank!";
+        // food errors
+        if (!artist || artist === "") newErrors.artist = "Cannot be blank!";
+        // rating errors
+        if (!album || album === "") newErrors.album = "Cannot be blank!";
+        // comment errors
+        if (!genre || genre === "") newErrors.genre = "Cannot be blank!";
+
+        return newErrors;
+    };
+    const saveSong = (e) => {
+        e.preventDefault();
+
+        const newErrors = findFormErrors();
+        console.log(newErrors);
+        if (Object.keys(newErrors).length > 0) {
+            // We got errors!
+            // console.log("sadfsdfsdf");
+            setErrors(newErrors);
+        } else {
+            var data = {
+                title: song.title,
+                artist: song.artist,
+                album: song.album,
+                genre: song.genre,
+            };
+            console.log(data);
+            SongService.create(data)
+                .then((response) => {
+                    setSong({
+                        id: response.data.id,
+                        title: response.data.title,
+                        artist: response.data.artist,
+                        album: response.data.album,
+                        genre: response.data.genre,
+                        release_date: response.data.release_date,
+                    });
+                    setSubmitted(true);
+                    console.log("sdfsdfsdfsd", response.data);
+                })
+                .catch((e) => {
+                    console.log(e);
+                });
+        }
     };
 
     const newSong = () => {
@@ -55,70 +90,85 @@ const AddSong = () => {
                     <p className="text-center pt-5 fs-5">
                         If you want to add new song again
                         <span className="px-2">
-                            <button
+                            <Button
                                 className="btn btn-success"
                                 onClick={newSong}
                             >
                                 Click Here
-                            </button>
+                            </Button>
                         </span>
                     </p>
                 </div>
             ) : (
                 <div className="px-5">
                     <h3 className="text-center pt-5">Create New Song</h3>
-                    <div className="form-group pt-3">
-                        <label htmlFor="title">Title</label>
-                        <input
-                            type="text"
-                            className="form-control"
-                            id="title"
-                            required
-                            value={song.title}
-                            onChange={handleInputChange}
-                            name="title"
-                        />
-                    </div>
-                    <div className="form-group pt-5">
-                        <label htmlFor="artist">Artist</label>
-                        <input
-                            type="text"
-                            className="form-control"
-                            id="artist"
-                            required
-                            value={song.artist}
-                            onChange={handleInputChange}
-                            name="artist"
-                        />
-                    </div>
-                    <div className="form-group pt-5">
-                        <label htmlFor="album">Album</label>
-                        <input
-                            type="text"
-                            className="form-control"
-                            id="album"
-                            required
-                            value={song.album}
-                            onChange={handleInputChange}
-                            name="album"
-                        />
-                    </div>
-                    <div className="form-group pt-5">
-                        <label htmlFor="genre">Genre</label>
-                        <input
-                            type="text"
-                            className="form-control"
-                            id="genre"
-                            required
-                            value={song.genre}
-                            onChange={handleInputChange}
-                            name="genre"
-                        />
-                    </div>
-
-                    <button onClick={saveSong} className="btn btn-success mt-5">
-                        Submit
-                    </button>
+                    <Form>
+                        <Form.Group className="mb-3">
+                            <Form.Label>Title</Form.Label>
+                            <Form.Control
+                                type="text"
+                                name="title"
+                                value={song.title}
+                                onChange={handleInputChange}
+                                isInvalid={!!errors.title}
+                                autoFocus
+                            />
+                            <Form.Control.Feedback type="invalid">
+                                {errors.title}
+                            </Form.Control.Feedback>
+                        </Form.Group>
+                        <Form.Group className="mb-3">
+                            <Form.Label>Artist</Form.Label>
+                            <Form.Control
+                                type="text"
+                                name="artist"
+                                value={song.artist}
+                                onChange={handleInputChange}
+                                isInvalid={!!errors.artist}
+                                autoFocus
+                            />
+                            <Form.Control.Feedback type="invalid">
+                                {errors.artist}
+                            </Form.Control.Feedback>
+                        </Form.Group>
+                        <Form.Group className="mb-3">
+                            <Form.Label>Album</Form.Label>
+                            <Form.Control
+                                type="text"
+                                name="album"
+                                value={song.album}
+                                onChange={handleInputChange}
+                                isInvalid={!!errors.album}
+                                autoFocus
+                            />
+                            <Form.Control.Feedback type="invalid">
+                                {errors.album}
+                            </Form.Control.Feedback>
+                        </Form.Group>
+                        <Form.Group className="mb-3">
+                            <Form.Label>Genre</Form.Label>
+                            <Form.Control
+                                type="text"
+                                name="genre"
+                                value={song.genre}
+                                onChange={handleInputChange}
+                                isInvalid={!!errors.genre}
+                                autoFocus
+                            />
+                            <Form.Control.Feedback type="invalid">
+                                {errors.genre}
+                            </Form.Control.Feedback>
+                        </Form.Group>
+                        <div className="text-end">
+                            <Button
+                                className="mt-5"
+                                variant="primary"
+                                onClick={saveSong}
+                            >
+                                Create Song
+                            </Button>
+                        </div>
+                    </Form>
                 </div>
             )}
         </div>

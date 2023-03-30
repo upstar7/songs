@@ -1,4 +1,7 @@
 import React, { useState, useEffect } from "react";
+import Button from "react-bootstrap/Button";
+import Form from "react-bootstrap/Form";
+import Modal from "react-bootstrap/Modal";
 import SongService from "../services/SongService";
 import { useParams, useNavigate } from "react-router-dom";
 
@@ -10,6 +13,7 @@ const Song = () => {
         album: "",
         genre: "",
     };
+    const [show, setShow] = useState(true);
     const [currentSong, setCurrentSong] = useState(initialSongState);
     const { id } = useParams();
     const navigate = useNavigate();
@@ -44,70 +48,73 @@ const Song = () => {
     };
 
     const cancelEditing = () => {
+        setShow(false);
         navigate("/music");
     };
     // console.log(currentSong);
     return (
         <div className="container px-5">
-            <h3 className="text-center pt-5">Song Details</h3>
-            <div className="form-group pt-2">
-                <label htmlFor="title">Title</label>
-                <input
-                    type="text"
-                    className="form-control"
-                    id="title"
-                    required
-                    value={currentSong.title}
-                    onChange={handleInputChange}
-                    name="title"
-                />
-            </div>
-            <div className="form-group pt-5">
-                <label htmlFor="artist">Artist</label>
-                <input
-                    type="text"
-                    className="form-control"
-                    id="artist"
-                    required
-                    value={currentSong.artist}
-                    onChange={handleInputChange}
-                    name="artist"
-                />
-            </div>
-            <div className="form-group pt-5">
-                <label htmlFor="album">Album</label>
-                <input
-                    type="text"
-                    className="form-control"
-                    id="album"
-                    required
-                    value={currentSong.album}
-                    onChange={handleInputChange}
-                    name="album"
-                />
-            </div>
-            <div className="form-group pt-5">
-                <label htmlFor="genre">Genre</label>
-                <input
-                    type="text"
-                    className="form-control"
-                    id="genre"
-                    required
-                    value={currentSong.genre}
-                    onChange={handleInputChange}
-                    name="genre"
-                />
-            </div>
-
-            <button onClick={updateSong} className="btn btn-success mt-5">
-                Update
-            </button>
-            <button
-                onClick={cancelEditing}
-                className="btn btn-danger mt-5 mx-4"
-            >
-                Cancel
-            </button>
+            <Modal show={show} onHide={cancelEditing} size="lg" backdrop="static">
+                <Modal.Header closeButton>
+                    <Modal.Title>Song Details</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <Form>
+                        <Form.Group className="mb-3">
+                            <Form.Label>Title</Form.Label>
+                            <Form.Control
+                                type="text"
+                                name="title"
+                                placeholder="title"
+                                value={currentSong.title}
+                                onChange={handleInputChange}
+                                autoFocus
+                            />
+                        </Form.Group>
+                        <Form.Group className="mb-3">
+                            <Form.Label>Artist</Form.Label>
+                            <Form.Control
+                                type="text"
+                                name="artist"
+                                placeholder="artist"
+                                value={currentSong.artist}
+                                onChange={handleInputChange}
+                                autoFocus
+                            />
+                        </Form.Group>
+                        <Form.Group className="mb-3">
+                            <Form.Label>Album</Form.Label>
+                            <Form.Control
+                                type="text"
+                                name="album"
+                                placeholder="album"
+                                value={currentSong.album}
+                                onChange={handleInputChange}
+                                autoFocus
+                            />
+                        </Form.Group>
+                        <Form.Group className="mb-3">
+                            <Form.Label>Genre</Form.Label>
+                            <Form.Control
+                                type="text"
+                                name="genre"
+                                placeholder="genre"
+                                value={currentSong.genre}
+                                onChange={handleInputChange}
+                                autoFocus
+                            />
+                        </Form.Group>
+                    </Form>
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={cancelEditing}>
+                        Close
+                    </Button>
+                    <Button variant="primary" onClick={updateSong}>
+                        Save Changes
+                    </Button>
+                </Modal.Footer>
+            </Modal>
         </div>
     );
 };
